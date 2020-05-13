@@ -10,7 +10,7 @@ type PropsType = {
 const Post = (props: PropsType) => {
 
     return (
-        <div className={styles.item}>
+        <div className={styles.dialog}>
             <img
                 src={"https://avatars.mds.yandex.net/get-zen_doc/192582/pub_5c456a357211c900ae966091_5c456bc8d4fdd900b0ce9220/scale_1200"}/>
             {props.message}
