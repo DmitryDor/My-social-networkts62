@@ -4,6 +4,7 @@ import styles from "./Post.module.css";
 type PropsType = {
     message: string,
     likesCount: number
+    id?: string
 }
 
 
