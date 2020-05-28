@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from "../render";
+
 export type DialogsType = {
     id: string,
     name: string
@@ -50,7 +52,7 @@ export type DialogsPageType = {
     messagesData: Array<MessagesType>
 }
 
-export type ProfilePageType= {
+export type ProfilePageType = {
     postData: Array<PostType>
 }
 
@@ -59,15 +61,15 @@ export type StateType = {
     dialogsPage: DialogsPageType
 }
 
-export let state: StateType  = {
+export let state: StateType = {
     profilePage: {
         postData: [
-            {id: "1", message: "Dimych", likesCount: 10},
-            {id: "2", message: "Andrey", likesCount: 5},
-            {id: "3", message: "Sveta", likesCount: 7},
-            {id: "4", message: "Sasha", likesCount: 8},
-            {id: "5", message: "Victor", likesCount: 5},
-            {id: "6", message: "Valera", likesCount: 18}
+            {id: "1", message: "Hello", likesCount: 10},
+            {id: "2", message: "Goodbyu", likesCount: 5},
+            {id: "3", message: "I'm fine", likesCount: 7},
+            {id: "4", message: "Good day!", likesCount: 8},
+            {id: "5", message: "Year", likesCount: 5},
+            {id: "6", message: "Welcome", likesCount: 18}
         ]
     },
     dialogsPage: {
@@ -84,8 +86,21 @@ export let state: StateType  = {
             {id: "2", message: "How are you?"},
             {id: "3", message: "I'm fine"},
             {id: "4", message: "I'm happy"},
+            {id: "5", message: "Happy new year"},
             {id: "5", message: "Happy new year"}
+
         ]
     }
 
+}
+
+
+export let addPost = (postMessage: string) => {
+    let newPostData = {
+        id: "5",
+        message: postMessage,
+        likesCount: 0
+    };
+    state.profilePage.postData.push(newPostData);
+    rerenderEntireTree(state);
 }

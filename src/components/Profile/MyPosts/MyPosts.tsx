@@ -4,30 +4,31 @@ import Post from "./Post/Post";
 import {PostType} from "../../../redux/state";
 
 
-
-
-
 type PropsType = {
     postData: Array<PostType>
+    addPost: Function;
 }
 
 
 const MyPosts = (props: PropsType) => {
 
-/*let postElements = postData.map( (post) => {
-    return (
-        <Post message={post.message} likesCount={post.likesCount} id={post.id}/>
-    )
-}) Ниже эта же запись в сокращённром варианте*/
+    /*let postElements = postData.map( (post) => {
+        return (
+            <Post message={post.message} likesCount={post.likesCount} id={post.id}/>
+        )
+    }) Ниже эта же запись в сокращённром варианте*/
 
-let postElements =  props.postData.map(post => <Post message={post.message} likesCount={post.likesCount} id={post.id}/> );
+    let postElements = props.postData.map(post => <Post message={post.message} likesCount={post.likesCount}
+                                                        id={post.id}/>);
 
-let newPostElement: any = React.createRef();
+    let newPostElement: any = React.createRef();
 
-let addPost = () => {
-    let text = newPostElement.current.value;
-   alert(text);
-}
+    let addPost = () => {
+
+        let text = newPostElement.current.value;
+        props.addPost(text);
+        newPostElement.current.value= "";
+    }
 
     return (
         <div className={styles.postsBlock}>
@@ -37,7 +38,7 @@ let addPost = () => {
                     <textarea ref={newPostElement}/>
                 </div>
                 <div>
-                    <button onClick={ addPost }>Add post</button>
+                    <button onClick={addPost}>Add post</button>
                 </div>
             </div>
             <div className={styles.posts}>
