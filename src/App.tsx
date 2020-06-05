@@ -8,32 +8,39 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import { StateType} from "./redux/state";
+import {StateType} from "./redux/state";
 
 
 export type PropsType = {
-   state: StateType
+    state: StateType
     addPost: Function
+    updateNewPostText: Function
 }
 
 const App = (props: PropsType) => {
 
 
-return (
-    <BrowserRouter>
-        <div className="app-wrapper">
-            <Header/>
-            <Navbar/>
-            <div className='app-wrapper-content'>
-                <Route path="/dialogs" render={() => <Dialogs state={props.state.dialogsPage}/>}/>
-                <Route path="/profile" render={() => <Profile state={props.state.profilePage} addPost ={props.addPost}/>}/>
-                <Route path="/news" render={() => <News/>}/>
-                <Route path="/music" render={() => <Music/>}/>
-                <Route path="/settings" render={() => <Settings/>}/>
+    return (
+        <BrowserRouter>
+            <div className="app-wrapper">
+                <Header/>
+                <Navbar/>
+                <div className='app-wrapper-content'>
+                    <Route path="/dialogs" render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>}/>
+                    <Route path="/profile" render={() => <Profile profilePage={props.state.profilePage}
+                                                                  addPost={props.addPost}
+                                                                  updateNewPostText={props.updateNewPostText}
+                    />
+                    }
+
+                    />
+                    <Route path="/news" render={() => <News/>}/>
+                    <Route path="/music" render={() => <Music/>}/>
+                    <Route path="/settings" render={() => <Settings/>}/>
+                </div>
             </div>
-        </div>
-    </BrowserRouter>
-);
+        </BrowserRouter>
+    );
 }
 
 export default App;
