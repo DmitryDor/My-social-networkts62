@@ -15,6 +15,8 @@ export type PropsType = {
     state: StateType
     addPost: Function
     updateNewPostText: Function
+    addMessage: Function
+    updateNewMessageText: Function
 }
 
 const App = (props: PropsType) => {
@@ -26,7 +28,10 @@ const App = (props: PropsType) => {
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path="/dialogs" render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>}/>
+                    <Route path="/dialogs" render={() => <Dialogs dialogsPage={props.state.dialogsPage}
+                                                                  addMessage={props.addMessage}
+                                                                  updateNewMessageText={props.updateNewMessageText}
+                    />}/>
                     <Route path="/profile" render={() => <Profile profilePage={props.state.profilePage}
                                                                   addPost={props.addPost}
                                                                   updateNewPostText={props.updateNewPostText}
