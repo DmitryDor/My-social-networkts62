@@ -8,31 +8,36 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {DialogsType, MessagesType, StateType} from "./redux/state";
+import {ActionType, StateType} from "./redux/state";
 
 
 export type PropsType = {
-   state: StateType
+    state: StateType
+    dispatch: (action: ActionType) => void
 }
 
 const App = (props: PropsType) => {
 
+    return (
+        <BrowserRouter>
+            <div className="app-wrapper">
+                <Header/>
+                <Navbar/>
+                <div className='app-wrapper-content'>
+                    <Route path="/dialogs" render={() => <Dialogs dialogsPage={props.state.dialogsPage}
+                                                                  dispatch={props.dispatch}
 
-return (
-    <BrowserRouter>
-        <div className="app-wrapper">
-            <Header/>
-            <Navbar/>
-            <div className='app-wrapper-content'>
-                <Route path="/dialogs" render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>}/>
-                <Route path="/profile" render={() => <Profile profilePage={props.state.profilePage}/>}/>
-                <Route path="/news" render={() => <News/>}/>
-                <Route path="/music" render={() => <Music/>}/>
-                <Route path="/settings" render={() => <Settings/>}/>
+                    />}/>
+                    <Route path="/profile" render={() => <Profile profilePage={props.state.profilePage}
+                                                                  dispatch={props.dispatch}
+                    />}/>
+                    <Route path="/news" render={() => <News/>}/>
+                    <Route path="/music" render={() => <Music/>}/>
+                    <Route path="/settings" render={() => <Settings/>}/>
+                </div>
             </div>
-        </div>
-    </BrowserRouter>
-);
+        </BrowserRouter>
+    );
 }
 
 export default App;
