@@ -5,7 +5,7 @@ import {
     followAC,
     setCurrentPageAC, setIsFeatchingAC,
     setTotalUsersCountAC,
-    setUsersAC,
+    setUsersAC, toggleFollowingProgressAC,
     unFollowAC,
     UserType
 } from "../../redux/usersReducer";
@@ -21,6 +21,7 @@ type MapStatePropsType = {
     totalUsersCount: number
     currentPage: number
     isFeatching: boolean
+    followingInProgress: any
 
 }
 
@@ -31,6 +32,7 @@ type MapDispatchToPropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (userCount: number) => void
     setIsFeatching: (isFeatching: boolean) => void
+    toggleFollowingProgress: (isFeatching: boolean, userId: number) => void
 
 }
 
@@ -62,15 +64,16 @@ class UsersContainer extends React.Component<PropsType, StateType> {
     }
 
     render() {
-        return <>
+        return <div>
             {this.props.isFeatching ? <Preloader/> : null}
-            <Users totalUsersCount={this.props.totalUsersCount}
+            {/*<Users totalUsersCount={this.props.totalUsersCount}
                    users={this.props.users} pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage} unFollow={this.props.unFollow}
                    follow={this.props.follow} setTotalUsersCount={this.props.setTotalUsersCount}
-                   onPageChanged={this.onPageChanged}
-            />
-        </>
+                   onPageChanged={this.onPageChanged} toggleFollowingProgress={this.props.toggleFollowingProgress}
+            />*/}
+            <Users {...this.props} onPageChanged={this.onPageChanged}/>
+        </div>
     }
 }
 
@@ -81,7 +84,8 @@ let mapStateToProps = (state: StateType): MapStatePropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFeatching: state.usersPage.isFeatching
+        isFeatching: state.usersPage.isFeatching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -93,4 +97,5 @@ export default connect(mapStateToProps, {
     setCurrentPage: setCurrentPageAC,
     setTotalUsersCount: setTotalUsersCountAC,
     setIsFeatching: setIsFeatchingAC,
+    toggleFollowingProgress: toggleFollowingProgressAC
 })(UsersContainer)

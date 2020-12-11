@@ -11,7 +11,7 @@ const ProfileInfo = (props: PropsType) => {
     if (props.profile === null) {
         return <Preloader/>
     }
-debugger
+
     return (
         <div>
             <div>

@@ -26,6 +26,12 @@ type ToogleIsFeatching = {
     type: 'TOOGLE-IS-FEATCHING'
     isFeatching: boolean
 }
+type ToggleIsProgress = {
+    type: 'TOOGLE-IS-PROGRESS'
+    isFeatching: boolean
+    userId: number
+}
+
 type ActionType =
     FollowActionType
     | UnFollowActionType
@@ -33,6 +39,7 @@ type ActionType =
     | SetCurrentPageActionType
     | SetTotalUsersCountActionType
     | ToogleIsFeatching
+    | ToggleIsProgress
 
 export type UserType = {
     name: string
@@ -44,6 +51,7 @@ export type UserType = {
     },
     status: null | string
     followed: boolean
+    followingInProgress: []
 }
 
 
@@ -58,7 +66,8 @@ let initialState = {
     pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
-    isFeatching: true
+    isFeatching: true,
+    followingInProgress:  [] as number []
 
 }
 
@@ -119,6 +128,15 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
                 isFeatching: action.isFeatching
             }
         }
+        case "TOOGLE-IS-PROGRESS": {
+            debugger
+            return {
+                ...state,
+                followingInProgress: action.isFeatching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
+            }
+        }
 
         default: {
             return state
@@ -138,4 +156,8 @@ export const setTotalUsersCountAC = (userCount: number): SetTotalUsersCountActio
     type: "SET-TOTAL-USERS-COUNT",
     userCount
 })
-export const setIsFeatchingAC = (isFeatching: boolean): ToogleIsFeatching => ({type: "TOOGLE-IS-FEATCHING", isFeatching})
+export const setIsFeatchingAC = (isFeatching: boolean): ToogleIsFeatching => ({
+    type: "TOOGLE-IS-FEATCHING",
+    isFeatching
+})
+export const toggleFollowingProgressAC = (isFeatching: boolean, userId: number):ToggleIsProgress => ({type: "TOOGLE-IS-PROGRESS", isFeatching, userId})

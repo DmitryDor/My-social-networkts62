@@ -32,7 +32,7 @@ class ProfileContainer extends React.Component<CommonPropsType> {
          }*/
         profileAPI.getProfiles(userId)
             .then(res => {
-                debugger
+
                 this.props.setUserProfile(res.data)
             })
     }
