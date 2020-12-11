@@ -1,14 +1,14 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {ActionType, AddPostAC, AddPostActionType, PostType, UpdateNewPostTextAC} from "../../../redux/state";
-import {log} from "util";
+import {PostType} from "../../../redux/store";
 
 
 type PropsType = {
     postData: Array<PostType>
     newPostText: string
-    dispatch: (action: ActionType) => void
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
 
@@ -20,15 +20,15 @@ const MyPosts = (props: PropsType) => {
 
 
     const addPost = () => {
-        // props.addPost()
+        props.addPost()
         // props.dispatch({type: "ADD-POST"})
-        props.dispatch(AddPostAC())
+        // props.dispatch(AddPostAC())
     }
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newText = e.currentTarget.value
-        // props.updateNewPostText(newText)
-        props.dispatch(UpdateNewPostTextAC(newText))
+        props.updateNewPostText(newText)
+        // props.dispatch(UpdateNewPostTextAC(newText))
     }
 
 
