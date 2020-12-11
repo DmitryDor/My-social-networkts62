@@ -3,7 +3,7 @@ import userPhoto from "../../assets/images/kapyushon_14725.jpg";
 import styles from "./Users.module.css";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {followUnfollowAPI} from "../../api/api";
 
 
 type PropsType = {
@@ -52,33 +52,20 @@ export const Users = (props: PropsType) => {
                         <div>
                             {u.followed
                                 ? <button onClick={() => {
-                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                        withCredentials: true,
-                                        headers: {
-                                            'API-KEY': "85f5b2d8-12c7-48ad-9f88-79f9075e9df3"
-                                        }
-                                    })
+                                    followUnfollowAPI.followUsers(u.id)
                                         .then(res => {
-                                           if(res.data.resultCode === 0){
-                                               props.unFollow(u.id)
-                                           }
+                                            if (res.data.resultCode === 0) {
+                                                props.unFollow(u.id)
+                                            }
                                         })
-
-
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
-                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,{}, {
-                                        withCredentials: true,
-                                        headers: {
-                                            'API-KEY': "85f5b2d8-12c7-48ad-9f88-79f9075e9df3"
-                                        }
-                                    })
+                                    followUnfollowAPI.unfolloewrUsers(u.id)
                                         .then(res => {
-                                            if(res.data.resultCode === 0){
+                                            if (res.data.resultCode === 0) {
                                                 props.follow(u.id)
                                             }
                                         })
-
 
                                 }}>Follow</button>
                             }
@@ -94,7 +81,7 @@ export const Users = (props: PropsType) => {
                             <div>{'u.location.city'}</div>
                         </span>
                     </span>
-                </div>,)
+                </div>)
             }
         </div>
     )

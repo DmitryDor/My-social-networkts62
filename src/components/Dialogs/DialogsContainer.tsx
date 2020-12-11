@@ -1,9 +1,5 @@
 import React from "react";
-import {
-    ActionTypeMessage,
-    ActionTypePost,
-    DialogsPageType
-} from "../../redux/store";
+import {DialogsPageType} from "../../redux/store";
 import {addMessageAC, updateMessageAC} from "../../redux/dialogsReducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";

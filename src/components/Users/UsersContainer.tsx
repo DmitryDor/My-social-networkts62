@@ -1,18 +1,18 @@
 import React from "react";
 import {connect} from "react-redux";
 import {StateType} from "../../redux/redux-store";
-import {Dispatch} from "redux";
 import {
     followAC,
     setCurrentPageAC, setIsFeatchingAC,
     setTotalUsersCountAC,
     setUsersAC,
     unFollowAC,
-    UsersType, UserType
+    UserType
 } from "../../redux/usersReducer";
-import axios from "axios";
 import Users from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
+import {usersAPI} from "../../api/api";
+
 
 
 type MapStatePropsType = {
@@ -43,26 +43,21 @@ class UsersContainer extends React.Component<PropsType, StateType> {
 
     componentDidMount() {
         this.props.setIsFeatching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        })
-            .then(res => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
                 this.props.setIsFeatching(false)
-                this.props.setUsers(res.data.items)
-                this.props.setTotalUsersCount(res.data.totalCount)
-
+                this.props.setUsers(data.items)
+                this.props.setTotalUsersCount(data.totalCount)
             })
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setIsFeatching(true)
         this.props.setCurrentPage(pageNumber)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,{
-            withCredentials: true
-        })
-            .then(res => {
+        usersAPI.getUsers(pageNumber, this.props.pageSize)
+            .then(data => {
                 this.props.setIsFeatching(false)
-                this.props.setUsers(res.data.items)
+                this.props.setUsers(data.items)
             })
     }
 

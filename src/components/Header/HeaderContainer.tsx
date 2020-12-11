@@ -1,9 +1,9 @@
 import React from 'react';
 import Header from "./Header";
-import axios from 'axios'
 import {connect} from "react-redux";
 import {StateType} from "../../redux/redux-store";
 import {DataType, setAuthUserDataAC} from "../../redux/authReducer";
+import {authAPI} from "../../api/api";
 
 type PropsType = {
     setAuthUserData: (data: DataType) => void
@@ -18,13 +18,12 @@ type CommonProps = PropsType & MapStateToPropsType
 
 class HeaderContainer extends React.Component<CommonProps, StateType> {
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true
-        }).then(res => {
-            if (res.data.resultCode === 0) {
-                this.props.setAuthUserData(res.data.data)
-            }
-        })
+        authAPI.authMe()
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    this.props.setAuthUserData(res.data.data)
+                }
+            })
     }
 
     render() {
