@@ -1,9 +1,12 @@
+import {Dispatch} from "redux";
+import {AppStateType} from "./redux-store";
+import {usersAPI} from "../api/api";
+
 export type PostType = {
     id: string,
     message: string,
     likesCount: number
 }
-
 
 export type AddPostActionType = {
     type: 'ADD-POST'
@@ -91,3 +94,13 @@ export const UpdateNewPostTextAC = (newText: string): UpdateNewPostTextActionTyp
 })
 export const setUserProfileAC = (profile: ProfileType): SetUserProfileActionType => ({type: "SET-USER-PROFILE", profile})
 
+export const setUsersProfileTC = (userId: string) => {
+    return (dispatch: Dispatch<ActionType>, getState: AppStateType) => {
+        // let userId = this.props.match.params.userId
+
+        usersAPI.getProfiles(userId)
+            .then(res => {
+                dispatch(setUserProfileAC(res.data))
+            })
+    }
+}

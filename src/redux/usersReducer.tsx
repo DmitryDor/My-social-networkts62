@@ -1,3 +1,7 @@
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
+import {AppStateType} from "./redux-store";
+
 type FollowActionType = {
     type: 'FOLLOW'
     userId: number
@@ -32,7 +36,7 @@ type ToggleIsProgress = {
     userId: number
 }
 
-type ActionType =
+type ActionsType =
     FollowActionType
     | UnFollowActionType
     | SetUsersActionType
@@ -67,13 +71,13 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFeatching: true,
-    followingInProgress:  [] as number []
+    followingInProgress: [] as number []
 
 }
 
 export type InitialStateType = typeof initialState
 
-export const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+export const usersReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case 'FOLLOW': {
             return {
@@ -145,8 +149,8 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
 }
 
 
-export const followAC = (userId: number): FollowActionType => ({type: "FOLLOW", userId})
-export const unFollowAC = (userId: number): UnFollowActionType => ({type: "UNFOLLOW", userId})
+export const followSuccessAC = (userId: number): FollowActionType => ({type: "FOLLOW", userId})
+export const unfollowSuccessAC = (userId: number): UnFollowActionType => ({type: "UNFOLLOW", userId})
 export const setUsersAC = (users: UsersType): SetUsersActionType => ({type: "SET-USERS", users})
 export const setCurrentPageAC = (currentPage: number): SetCurrentPageActionType => ({
     type: "SET-CURRENT_PAGE",
@@ -160,4 +164,47 @@ export const setIsFeatchingAC = (isFeatching: boolean): ToogleIsFeatching => ({
     type: "TOOGLE-IS-FEATCHING",
     isFeatching
 })
-export const toggleFollowingProgressAC = (isFeatching: boolean, userId: number):ToggleIsProgress => ({type: "TOOGLE-IS-PROGRESS", isFeatching, userId})
+export const toggleFollowingProgressAC = (isFeatching: boolean, userId: number): ToggleIsProgress => ({
+    type: "TOOGLE-IS-PROGRESS",
+    isFeatching,
+    userId
+})
+
+export const getUsersThunkCreater = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch<ActionsType>, getState: AppStateType) => {
+        dispatch(setIsFeatchingAC(true))
+        usersAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(setIsFeatchingAC(false))
+                dispatch(setUsersAC(data.items))
+                dispatch(setTotalUsersCountAC(data.totalCount))
+            })
+    }
+}
+
+export const followTC = (id: number) => {
+    return ((dispatch: Dispatch<ActionsType>, getState: AppStateType) => {
+        dispatch(toggleFollowingProgressAC(true, id))
+        usersAPI.unfolloewrUsers(id)
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(followSuccessAC(id))
+                }
+                dispatch(toggleFollowingProgressAC(false, id))
+            })
+    })
+}
+
+
+export const unfollowTC = (id: number) => {
+    return ((dispatch: Dispatch<ActionsType>, getState: AppStateType) => {
+        dispatch(toggleFollowingProgressAC(true, id))
+        usersAPI.followUsers(id)
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(unfollowSuccessAC(id))
+                }
+               dispatch(toggleFollowingProgressAC(false, id))
+            })
+    })
+}

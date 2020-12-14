@@ -3,7 +3,7 @@ import {DialogsPageType} from "../../redux/store";
 import {addMessageAC, updateMessageAC} from "../../redux/dialogsReducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
-import {StateType} from "../../redux/redux-store";
+import {AppStateType} from "../../redux/redux-store";
 import {Dispatch} from "redux";
 
 
@@ -39,7 +39,7 @@ export type DialogsContainerPropsType = mapStateToPropsType & mapDispatchToProps
 }*/
 
 
-let mapStateToProps = (state: StateType) => {
+let mapStateToProps = (state: AppStateType) => {
     return {
         dialogsPage: state.dialogsPage
     }

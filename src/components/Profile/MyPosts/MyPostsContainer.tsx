@@ -2,7 +2,7 @@ import React from 'react';
 import {AddPostAC, UpdateNewPostTextAC} from "../../../redux/profileReducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
-import {StateType} from "../../../redux/redux-store";
+import {AppStateType} from "../../../redux/redux-store";
 import {Dispatch} from "redux";
 
 
@@ -33,7 +33,7 @@ const MyPostsContainer = (props: PropsType) => {
     );
 }*/
 
-let mapStateToProps = (state: StateType) => {
+let mapStateToProps = (state: AppStateType) => {
     return ({
         postData: state.profilePage.postData,
         newPostText: state.profilePage.newPostText

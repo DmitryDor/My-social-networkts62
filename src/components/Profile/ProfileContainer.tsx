@@ -1,11 +1,10 @@
 import React from 'react';
 
 import Profile from "./Profile";
-import {StateType} from "../../redux/redux-store";
+import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
-import {ProfileType, setUserProfileAC} from "../../redux/profileReducer";
+import {ProfileType, setUserProfileAC, setUsersProfileTC} from "../../redux/profileReducer";
 import {withRouter, RouteComponentProps} from 'react-router-dom';
-import {profileAPI} from "../../api/api";
 
 
 // type OwnPropsType = {}
@@ -13,7 +12,8 @@ type MapStateToPropsType = {
     profile: ProfileType | null
 }
 type MapDispatchToPropsType = {
-    setUserProfile: (profile: ProfileType) => void
+    // setUserProfile: (profile: ProfileType) => void
+    setUsersProfile: (userId: string) => void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -27,14 +27,18 @@ type CommonPropsType = RouteComponentProps<PathParamsType> & PropsType
 class ProfileContainer extends React.Component<CommonPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
-        /* if (!userId) {
-             userId = '2'
-         }*/
-        profileAPI.getProfiles(userId)
-            .then(res => {
+        this.props.setUsersProfile(userId)
 
-                this.props.setUserProfile(res.data)
-            })
+
+        /*  let userId = this.props.match.params.userId
+          /!* if (!userId) {
+               userId = '2'
+           }*!/
+          profileAPI.getProfiles(userId)
+              .then(res => {
+
+                  this.props.setUserProfile(res.data)
+              })*/
     }
 
     render() {
@@ -46,7 +50,7 @@ class ProfileContainer extends React.Component<CommonPropsType> {
 }
 
 
-const mapStateToProps = (state: StateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         profile: state.profilePage.profile
     }
@@ -55,5 +59,6 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => {
 let WithUrlDataContainerComponent = withRouter(ProfileContainer)
 
 export default connect(mapStateToProps, {
-    setUserProfile: setUserProfileAC
+    // setUserProfile: setUserProfileAC
+    setUsersProfile: setUsersProfileTC
 })(WithUrlDataContainerComponent)
