@@ -34,7 +34,7 @@ const Dialogs = (props: DialogsContainerPropsType) => {
         }
     }
 
-    if(!props.asAuth) return <Redirect to={'/login'} />
+    // if(!props.asAuth) return <Redirect to={'/login'} />
 
     return (
         <div className={styles.dialogs}>

@@ -10,6 +10,7 @@ import {
 import Users from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
 import {Redirect} from "react-router-dom";
+import {withAuthRedirect} from "../../hok/withAuthRedirect";
 
 
 
@@ -20,7 +21,7 @@ type MapStatePropsType = {
     currentPage: number
     isFeatching: boolean
     followingInProgress: any
-    isAuth: boolean
+    // isAuth: boolean
 
 }
 
@@ -63,7 +64,7 @@ class UsersContainer extends React.Component<PropsType, AppStateType> {
     }
 
     render() {
-        if(!this.props.isAuth ) return <Redirect to={'/login'} />
+        // if(!this.props.isAuth ) return <Redirect to={'/login'} />
         return <div>
             {this.props.isFeatching ? <Preloader/> : null}
 
@@ -90,9 +91,10 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         currentPage: state.usersPage.currentPage,
         isFeatching: state.usersPage.isFeatching,
         followingInProgress: state.usersPage.followingInProgress,
-        isAuth: state.auth.isAuth
+        // isAuth: state.auth.isAuth
     }
 }
+let AuthRedirectComponent = withAuthRedirect(UsersContainer)
 
 
 export default connect(mapStateToProps, {
@@ -103,4 +105,4 @@ export default connect(mapStateToProps, {
     unfollow: unfollowTC
 
 
-})(UsersContainer)
+})(AuthRedirectComponent)
