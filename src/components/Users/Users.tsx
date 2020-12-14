@@ -2,7 +2,7 @@ import React from "react";
 import userPhoto from "../../assets/images/kapyushon_14725.jpg";
 import styles from "./Users.module.css";
 import {UserType} from "../../redux/usersReducer";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import {usersAPI} from "../../api/api";
 
 
@@ -16,6 +16,7 @@ type PropsType = {
     followingInProgress: []
     follow: (userId: number) => void
     unfollow: (userId: number) => void
+
 }
 
 
@@ -27,6 +28,9 @@ export const Users = (props: PropsType) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
+
+
+
     return (
         <div>
             <div>
