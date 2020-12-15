@@ -108,7 +108,7 @@ export default connect(mapStateToProps, {
 
 })(AuthRedirectComponent)*/
 
-export default compose(
+export default compose<React.ComponentClass>(
     connect(mapStateToProps, {
         setCurrentPage: setCurrentPageAC,
         toggleFollowingProgress: toggleFollowingProgressAC,
