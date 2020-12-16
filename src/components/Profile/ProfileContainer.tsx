@@ -43,7 +43,7 @@ class ProfileContainer extends React.Component<CommonPropsType> {
 
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = '2'
+            userId = '9455'
         }
         this.props.setUsersProfile(userId)
         this.props.setStatus(userId)

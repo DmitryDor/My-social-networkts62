@@ -22,7 +22,7 @@ const ProfileInfo = (props: PropsType) => {
             </div>*/}
             <div className={styles.descriptionBlock}>
                 <img src={props.profile.photos.large ? props.profile.photos.large : "" } alt={'Your photo'} />
-                <ProfileStatus status={props.status } updateStatus={props.updateStatus }/>
+                <ProfileStatus status={props.status || 'No status'} updateStatus={props.updateStatus }/>
                 <div>{props.profile.contacts.facebook}</div>
                 <div>{props.profile.contacts.github}</div>
                 <div>{props.profile.lookingForAJobDescription}</div>
