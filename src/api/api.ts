@@ -17,19 +17,23 @@ export const usersAPI = {
     },
     unfolloewrUsers(id: number) {
         return instance.post(`follow/${id}`, {})
-    },
-    getProfiles(userId: string) {
-        return instance.get(`profile/${userId}`)
     }
 }
- export const authAPI =  {
-    authMe(){
+export const authAPI = {
+    authMe() {
         return instance.get(`auth/me`)
-     }
- }
-/* export const profileAPI = {
+    }
+}
+export const profileAPI = {
     getProfiles(userId: string) {
         return instance.get(`profile/${userId}`)
+    },
+    getStatus(userId: string) {
+        return instance.get(`profile/status/${userId}`)
+    },
+    updateStatus(status: string) {
+        return instance.put(`profile/status`, {status})
     }
- }*/
+}
+
 
