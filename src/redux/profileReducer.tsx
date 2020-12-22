@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {AppStateType} from "./redux-store";
-import {profileAPI, usersAPI} from "../api/api";
+import {profileAPI} from "../api/api";
 
 export type PostType = {
     id: string,
@@ -10,12 +10,13 @@ export type PostType = {
 
 export type AddPostActionType = {
     type: 'ADD-POST'
+    post: string
 }
 
-type  UpdateNewPostTextActionType = {
+/*type  UpdateNewPostTextActionType = {
     type: 'UPDATE-NEW-POST-TEXT'
     newText: string
-}
+}*/
 type SetUserProfileActionType = {
     type: 'SET-USER-PROFILE'
     profile: any
@@ -52,14 +53,14 @@ export type ProfileType = {
 
 
 type ActionType =
-    AddPostActionType | UpdateNewPostTextActionType |
+    AddPostActionType |
     SetUserProfileActionType | SetStatusActionType
 
 type InitialStateType = typeof initialState
 
 let initialState = {
     postData: [] as Array<PostType>,
-    newPostText: '',
+    // newPostText: '',
     profile: null as null | ProfileType,
     status: '' as string
 }
@@ -70,8 +71,8 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
             return {
                 ...state,
                 // postData: state.postData.map(el => ({...el}))
-                postData: [...state.postData, {id: "5", message: state.newPostText, likesCount: 0}],
-                newPostText: ''
+                postData: [...state.postData, {id: "5", message: action.post, likesCount: 0}],
+                // newPostText: ''
             }
             /* const newPost = {id: "5", message: stateCopy.newPostText, likesCount: 0}
              stateCopy.postData = [...stateCopy.postData]
@@ -79,12 +80,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
              stateCopy.newPostText = ''
              return stateCopy*/
         }
-        case "UPDATE-NEW-POST-TEXT": {
+      /*  case "UPDATE-NEW-POST-TEXT": {
             return {
                 ...state,
                 newPostText: action.newText
             }
-        }
+        }*/
         case "SET-USER-PROFILE": {
             return {
                 ...state,
@@ -104,12 +105,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
     }
 }
 
-export const AddPostAC = (): AddPostActionType => ({type: "ADD-POST"})
+export const AddPostAC = (post: string): AddPostActionType => ({type: "ADD-POST", post})
 
-export const UpdateNewPostTextAC = (newText: string): UpdateNewPostTextActionType => ({
+/*export const UpdateNewPostTextAC = (newText: string): UpdateNewPostTextActionType => ({
     type: 'UPDATE-NEW-POST-TEXT',
     newText
-})
+})*/
 export const setUserProfileAC = (profile: ProfileType): SetUserProfileActionType => ({
     type: "SET-USER-PROFILE",
     profile

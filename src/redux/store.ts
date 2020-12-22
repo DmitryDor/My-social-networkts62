@@ -101,7 +101,7 @@ export const store: StoreType = {
     dispatch(action) {
         //@ts-ignore
         profileReducer(this._state.profilePage, action as ActionTypePost)
-        dialogsReducer(this._state.dialogsPage, action as ActionTypeMessage)
+        // dialogsReducer(this._state.dialogsPage, action as ActionTypeMessage)
         this._callSubscriber()
 
     }

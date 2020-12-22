@@ -12,7 +12,7 @@ type FormDataType = {
 
 export const Login = () => {
 
-    const onSubmit = (formData: any) => {
+    const onSubmit = (formData: FormDataType) => {
         console.log(formData)
     }
 

@@ -1,10 +1,19 @@
 type AddMessageActionType = {
     type: 'ADD-MESSAGE'
+    newMessageBody: string
 }
 type UpdateMessageText = {
     type: 'UPDATE-MESSAGE-TEXT'
     newMessage: string
 }
+
+//
+/*export type DialogsPageType = {
+    dialogsData: Array<DialogsType>
+    messagesData: Array<MessagesType>
+    newMessage: string*/
+// }
+//
 type ActionType = AddMessageActionType | UpdateMessageText
 
 export type DialogsType = {
@@ -16,10 +25,10 @@ export type MessagesType = {
     message: string
 }
 
-type InitialStateType = {
+export type InitialStateType = {
     dialogsData: Array<DialogsType>
     messagesData: Array<MessagesType>
-    newMessage: string
+    // newMessage: string
 }
 
 let initialState: InitialStateType = {
@@ -32,7 +41,7 @@ let initialState: InitialStateType = {
         {id: "6", name: "Valera"}
     ],
     messagesData: [ ],
-    newMessage: ''
+    // newMessage: ''
 }
 
 export const dialogsReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
@@ -40,9 +49,9 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
         case "ADD-MESSAGE": {
             return {
                 ...state,
-                newMessage: '',
+                // newMessage: '',
                 // messagesData: state.messagesData.map(el => ({...el})),
-                messagesData: [...state.messagesData, {id: "6", message: state.newMessage}]
+                messagesData: [...state.messagesData, {id: "6", message: action.newMessageBody}]
             }
             // let body = state.newMessage
           /*  const stateCopy = {
@@ -60,7 +69,7 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
         case "UPDATE-MESSAGE-TEXT": {
             return {
                 ...state,
-                newMessage: action.newMessage
+                // newMessage: action.newMessage
             }
            /* const stateCopy = {...state}
             stateCopy.newMessage = action.newMessage
@@ -71,9 +80,10 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
         }
     }
 }
-export const addMessageAC = (): AddMessageActionType => ({type: 'ADD-MESSAGE'})
+export const addMessageAC = (newMessageBody: string): AddMessageActionType => ({type: 'ADD-MESSAGE', newMessageBody})
 
+/*
 export const updateMessageAC = (newMessage: string): UpdateMessageText => ({
     type: 'UPDATE-MESSAGE-TEXT',
     newMessage: newMessage
-})
+})*/

@@ -1,6 +1,5 @@
 import React from "react";
-import {DialogsPageType} from "../../redux/store";
-import {addMessageAC, updateMessageAC} from "../../redux/dialogsReducer";
+import {addMessageAC, InitialStateType} from "../../redux/dialogsReducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
@@ -14,14 +13,14 @@ import {withAuthRedirect} from "../../hok/withAuthRedirect";
 
 }*/
 type mapStateToPropsType = {
-    dialogsPage: DialogsPageType
+    dialogsPage: InitialStateType
     // asAuth: boolean
 
 }
 
 type mapDispatchToPropsType = {
-    addMessage: () => void
-    updateMessage: (newMessage: string) => void
+    addMessage: (newMessageBody: string) => void
+    // updateMessage: (newMessage: string) => void
 }
 
 
@@ -50,12 +49,12 @@ let mapStateToProps = (state: AppStateType) => {
 }
 let mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        addMessage: () => {
-            dispatch(addMessageAC())
+        addMessage: (newMessageBody: string) => {
+            dispatch(addMessageAC(newMessageBody))
         },
-        updateMessage: (newMessage: string) => {
+       /* updateMessage: (newMessage: string) => {
             dispatch(updateMessageAC(newMessage))
-        }
+        }*/
     }
 }
 

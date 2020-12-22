@@ -175,6 +175,7 @@ export const getUsersThunkCreater = (currentPage: number, pageSize: number) => {
         dispatch(setIsFeatchingAC(true))
         usersAPI.getUsers(currentPage, pageSize)
             .then(data => {
+                dispatch(setCurrentPageAC(currentPage))
                 dispatch(setIsFeatchingAC(false))
                 dispatch(setUsersAC(data.items))
                 dispatch(setTotalUsersCountAC(data.totalCount))

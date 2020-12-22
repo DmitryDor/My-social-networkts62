@@ -2,6 +2,69 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import {PostType} from "../../../redux/store";
+import {Field, InjectedFormProps} from "redux-form";
+import {reduxForm} from "redux-form";
+
+
+type PropsType = {
+    postData: Array<PostType>
+    // newPostText: string
+    addPost: (post: string) => void
+    // updateNewPostText: (newText: string) => void
+}
+type FormDataType = {
+    post: string
+}
+
+
+const MyPosts = (props: PropsType) => {
+
+
+    let postElements = props.postData.map(post => <Post message={post.message} likesCount={post.likesCount}
+                                                        id={post.id} key={post.id}/>);
+
+
+    const onSubmit = (value: FormDataType) => {
+        props.addPost(value.post)
+    }
+
+
+    return (
+        <div className={styles.postsBlock}>
+            <h3>My posts</h3>
+            <div>
+
+                <TextAreaFormRedux onSubmit={onSubmit}/>
+
+            </div>
+            <div className={styles.posts}>
+                {postElements}
+            </div>
+        </div>
+    );
+}
+
+const TextAreaForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+    return <form onSubmit={props.handleSubmit}>
+        <div>
+            <Field  placeholder='Enter your post' component={'textarea'} name={'post'}/>
+        </div>
+        <div>
+            <button>Add post</button>
+        </div>
+    </form>
+}
+
+const TextAreaFormRedux = reduxForm<FormDataType>({form: 'MyPosts'})(TextAreaForm)
+
+export default MyPosts;
+
+//до 76 урока
+/*
+import React, {ChangeEvent, KeyboardEvent} from 'react';
+import styles from "./MyPosts.module.css";
+import Post from "./Post/Post";
+import {PostType} from "../../../redux/store";
 
 
 type PropsType = {
@@ -42,10 +105,12 @@ const MyPosts = (props: PropsType) => {
         <div className={styles.postsBlock}>
             <h3>My posts</h3>
             <div>
+
                 <div>
                     <textarea value={props.newPostText} onChange={onPostChange}
                               placeholder={'Enter your post'} onKeyPress={onKeyPressHandler}/>
                 </div>
+
                 <div>
                     <button onClick={addPost}>Add post</button>
                 </div>
@@ -56,5 +121,4 @@ const MyPosts = (props: PropsType) => {
         </div>
     );
 }
-
-export default MyPosts;
+export default MyPosts;*/
