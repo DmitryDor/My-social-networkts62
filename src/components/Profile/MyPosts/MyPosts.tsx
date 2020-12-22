@@ -4,7 +4,9 @@ import Post from "./Post/Post";
 import {PostType} from "../../../redux/store";
 import {Field, InjectedFormProps} from "redux-form";
 import {reduxForm} from "redux-form";
-
+import {maxLengthCreater} from "../../../utils(validator)/validators";
+import {required} from '../../../utils(validator)/validators'
+import {Textarea} from "../../../assets/formsControls/FormsControls";
 
 type PropsType = {
     postData: Array<PostType>
@@ -43,11 +45,13 @@ const MyPosts = (props: PropsType) => {
         </div>
     );
 }
+const maxLength10 = maxLengthCreater(10)
 
 const TextAreaForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return <form onSubmit={props.handleSubmit}>
         <div>
-            <Field  placeholder='Enter your post' component={'textarea'} name={'post'}/>
+            <Field  placeholder='Enter your post' component={Textarea} name={'post'}
+                    validate={[required, maxLength10]}/>
         </div>
         <div>
             <button>Add post</button>
