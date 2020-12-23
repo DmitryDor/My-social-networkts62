@@ -91,7 +91,7 @@ export default compose<React.ComponentClass>(
         updateStatus: updateStatusTC
     }),
     withRouter,
-    // withAuthRedirect
+    withAuthRedirect
 )(ProfileContainer)
 
 
