@@ -1,12 +1,12 @@
 import React from "react";
-import styles from "./Login.module.css"
+import styles from '../../assets/formsControls/FormsControls.module.css'
 import {InjectedFormProps, reduxForm} from "redux-form";
 import {Field} from "redux-form";
 import {maxLengthCreater, required} from "../../utils(validator)/validators";
 import {Input, Textarea} from "../../assets/formsControls/FormsControls";
 import {connect} from "react-redux";
 import {loginTC} from "../../redux/authReducer";
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
 
 type FormDataType = {
@@ -15,21 +15,21 @@ type FormDataType = {
     rememberMe: boolean
 }
 type MapDispatchToPropsType = {
-    login: (login: string, password: string , rememberMe: boolean) => void
+    login: (login: string, password: string, rememberMe: boolean) => void
 }
 type MapStateToPropsType = {
     isAuth: boolean
 }
 type PropsType = MapDispatchToPropsType & MapStateToPropsType
 
- export const Login = (props: PropsType) => {
+export const Login = (props: PropsType) => {
 
     const onSubmit = (formData: FormDataType) => {
         props.login(formData.login, formData.password, formData.rememberMe)
     }
 
-    if(props.isAuth){
-        return <Redirect to={'/profile'} />
+    if (props.isAuth) {
+        return <Redirect to={'/profile'}/>
     } else {
         return (
             <div>
@@ -40,7 +40,6 @@ type PropsType = MapDispatchToPropsType & MapStateToPropsType
             </div>
         );
     }
-
 
 
 }
@@ -56,11 +55,16 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                 />
             </div>
             <div>
-                <Field type={'password'} placeholder='Password' component={Input} name='password' validate={[required, maxLength10]}/>
+                <Field type={'password'} placeholder='Password' component={Input} name='password'
+                       validate={[required, maxLength10]}/>
             </div>
             <div>
                 <Field type='checkbox' component='input' name='rememberMe'/> remember me
             </div>
+            { props.error &&
+            <div className={styles.formSummaryError}>
+                {props.error}
+            </div> }
             <div>
                 <button>Login</button>
             </div>
@@ -78,4 +82,4 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export  const LoginCont = connect(mapStateToProps, {login: loginTC})(Login)
+export const LoginCont = connect(mapStateToProps, {login: loginTC})(Login)

@@ -2,11 +2,12 @@ import {AppStateType} from "./redux-store";
 import {authAPI} from "../api/api";
 import {Dispatch} from "redux";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {FormAction, stopSubmit} from "redux-form";
 
 export type DataType = {
     id: null | number
     login: null | string
-    email: null | string
+    email: null | number
     isAuth: boolean
 }
 
@@ -26,8 +27,7 @@ let initialState = {
 export type InitialStateType = typeof initialState
 
 
-
-type ActionsType = SetUserData
+type ActionsType = SetUserData & FormAction
 
 type ThunkActionType = ThunkAction<void, AppStateType, unknown, ActionsType>
 
@@ -48,12 +48,19 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 }
 
 
-export const setAuthUserDataAC = (payload: DataType, isAuth: boolean): SetUserData => ({type: "SER-USER-DATA", payload, isAuth})
+export const setAuthUserDataAC = (payload: DataType, isAuth: boolean): SetUserData => {
+    return {
+        type: "SER-USER-DATA",
+        payload,
+        isAuth
+    }
+}
 
-export const setAuthUserTC = ( ): ThunkActionType => {
+export const setAuthUserTC = (): ThunkActionType => {
     return ((dispatch, getState) => {
         authAPI.authMe()
             .then(res => {
+
                 if (res.data.resultCode === 0) {
                     dispatch(setAuthUserDataAC(res.data.data, true))
                 }
@@ -61,23 +68,28 @@ export const setAuthUserTC = ( ): ThunkActionType => {
     })
 }
 
-export const loginTC = (login: string, password: string , rememberMe: boolean): ThunkActionType=> {
-    return ((dispatch, getState)  => {
+
+export const loginTC = (login: string, password: string, rememberMe: boolean): ThunkAction<void, AppStateType, unknown, ActionsType | FormAction> => {
+    return ((dispatch) => {
         authAPI.login(login, password, rememberMe)
-            .then( res => {
-                if(res.data.resultCode === 0){
+            .then(res => {
+                if (res.data.resultCode === 0) {
                     dispatch(setAuthUserTC())
+                } else {
+                    let message = res.data.messages.legend > 0 ? res.data.messages[0] : 'Some message'
+                    dispatch(stopSubmit('login', {_error: message}))
                 }
             })
     })
 }
 
-export const logoutTC = (): ThunkActionType=> {
-    return ((dispatch, getState)  => {
+
+export const logoutTC = (): ThunkActionType => {
+    return ((dispatch, getState) => {
         authAPI.logout()
-            .then( res => {
-                if(res.data.resultCode === 0){
-                    dispatch(setAuthUserDataAC( res.data.data , false))
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(setAuthUserDataAC(res.data.data, false))
                 }
             })
     })

@@ -2,10 +2,9 @@ import React from 'react';
 import Header from "./Header";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import { logoutTC,  setAuthUserTC} from "../../redux/authReducer";
+import { logoutTC} from "../../redux/authReducer";
 
 type PropsType = {
-    setAuthUser: () => void
     logout: () => void
 
 }
@@ -17,9 +16,7 @@ type CommonProps = PropsType & MapStateToPropsType
 
 
 class HeaderContainer extends React.Component<CommonProps, AppStateType> {
-    componentDidMount() {
-        this.props.setAuthUser()
-    }
+
 
     render() {
         return <Header {...this.props}/>;
@@ -33,6 +30,5 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
 
 
 export default connect(mapStateToProps, {
-    setAuthUser: setAuthUserTC,
     logout: logoutTC
 })(HeaderContainer);

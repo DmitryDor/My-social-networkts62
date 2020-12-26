@@ -6,7 +6,6 @@ import {connect} from "react-redux";
 import {
     ProfileType,
     setStatusTC,
-    setUserProfileAC,
     setUsersProfileTC,
     updateStatusTC
 } from "../../redux/profileReducer";
@@ -19,7 +18,8 @@ import {compose} from "redux";
 type MapStateToPropsType = {
     profile: ProfileType | null
     status: string
-    // isAuth: boolean
+    aothorizedUserId: number | null
+    isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -40,10 +40,10 @@ type CommonPropsType = RouteComponentProps<PathParamsType> & PropsType
 
 class ProfileContainer extends React.Component<CommonPropsType> {
     componentDidMount() {
-
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = '9455'
+            // userId= '9455'
+            this.props.aothorizedUserId && (userId = (this.props.aothorizedUserId).toString())
         }
         this.props.setUsersProfile(userId)
         this.props.setStatus(userId)
@@ -76,9 +76,12 @@ class ProfileContainer extends React.Component<CommonPropsType> {
 
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+
     return {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        aothorizedUserId: state.auth.id,
+        isAuth: state.auth.isAuth
     }
 }
 
