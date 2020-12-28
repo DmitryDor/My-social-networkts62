@@ -116,5 +116,5 @@ export default compose<React.ComponentClass>(
         follow: followTC,
         unfollow: unfollowTC
     }),
-    withAuthRedirect
+    // withAuthRedirect
 )(UsersContainer)
