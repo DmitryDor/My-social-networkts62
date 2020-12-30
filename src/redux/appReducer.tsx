@@ -1,6 +1,7 @@
 import {AppStateType} from "./redux-store";
 import {ThunkAction} from "redux-thunk";
 import {setAuthUserTC, SetUserData} from "./authReducer";
+import {Dispatch} from "redux";
 
 
 type InitialazedSuccsessActionType = {
@@ -41,7 +42,6 @@ export const initialazedAppTC = (): ThunkActionType => (dispatch) => {
 
    /* let promise = new Promise(() => dispatch(setAuthUserTC()))
     promise.then( () => dispatch(initialazedSuccessAC()))*/
-
     Promise.all([promise]).then( () => {
         dispatch(initialazedSuccessAC())
     })

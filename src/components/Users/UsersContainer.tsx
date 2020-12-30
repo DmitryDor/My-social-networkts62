@@ -9,9 +9,15 @@ import {
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
-import {Redirect} from "react-router-dom";
-import {withAuthRedirect} from "../../hok/withAuthRedirect";
 import { compose } from "redux";
+import {
+    getcurrentPage,
+    getfollowingInProgress,
+    getisFeatching,
+    getPageSize,
+    gettotalUsersCount,
+    getUsers
+} from "../../redux/usersSelectors";
 
 
 
@@ -21,7 +27,7 @@ type MapStatePropsType = {
     totalUsersCount: number
     currentPage: number
     isFeatching: boolean
-    followingInProgress: any
+    followingInProgress: Array<number>
     // isAuth: boolean
 
 }
@@ -82,19 +88,26 @@ class UsersContainer extends React.Component<PropsType, AppStateType> {
 
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
-
-
-
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFeatching: state.usersPage.isFeatching,
-        followingInProgress: state.usersPage.followingInProgress,
-        // isAuth: state.auth.isAuth
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: gettotalUsersCount(state),
+        currentPage: getcurrentPage(state),
+        isFeatching: getisFeatching(state),
+        followingInProgress: getfollowingInProgress(state),
     }
 }
+
+export default compose<React.ComponentClass>(
+    connect(mapStateToProps, {
+        setCurrentPage: setCurrentPageAC,
+        toggleFollowingProgress: toggleFollowingProgressAC,
+        getUsers: getUsersThunkCreater,
+        follow: followTC,
+        unfollow: unfollowTC
+    }),
+    // withAuthRedirect
+)(UsersContainer)
 /*let AuthRedirectComponent = withAuthRedirect(UsersContainer)
 
 
@@ -108,13 +121,3 @@ export default connect(mapStateToProps, {
 
 })(AuthRedirectComponent)*/
 
-export default compose<React.ComponentClass>(
-    connect(mapStateToProps, {
-        setCurrentPage: setCurrentPageAC,
-        toggleFollowingProgress: toggleFollowingProgressAC,
-        getUsers: getUsersThunkCreater,
-        follow: followTC,
-        unfollow: unfollowTC
-    }),
-    // withAuthRedirect
-)(UsersContainer)
