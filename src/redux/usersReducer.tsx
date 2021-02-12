@@ -72,7 +72,6 @@ let initialState = {
     currentPage: 1,
     isFeatching: true,
     followingInProgress: [] as number []
-
 }
 
 export type InitialStateType = typeof initialState

@@ -28,7 +28,6 @@ type SetStatusActionType = {
 }
 
 
-
 export type ProfileType = {
     aboutMe: string
     contacts: {
@@ -80,12 +79,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
              stateCopy.newPostText = ''
              return stateCopy*/
         }
-      /*  case "UPDATE-NEW-POST-TEXT": {
-            return {
-                ...state,
-                newPostText: action.newText
-            }
-        }*/
+        /*  case "UPDATE-NEW-POST-TEXT": {
+              return {
+                  ...state,
+                  newPostText: action.newText
+              }
+          }*/
         case "SET-USER-PROFILE": {
             return {
                 ...state,
@@ -115,7 +114,7 @@ export const setUserProfileAC = (profile: ProfileType): SetUserProfileActionType
     type: "SET-USER-PROFILE",
     profile
 })
- const setStatusAC = (status: string): SetStatusActionType => ({
+const setStatusAC = (status: string): SetStatusActionType => ({
     type: "SET-STATUS", status
 })
 
@@ -138,10 +137,10 @@ export const setStatusTC = (userId: string) => {
 }
 
 export const updateStatusTC = (status: string) => {
-    return (dispatch: Dispatch<ActionType>, getState: AppStateType) => {
+    return (dispatch: Dispatch<ActionType>) => {
         profileAPI.updateStatus(status)
             .then(res => {
-                if(res.data.resultCode === 0){
+                if (res.data.resultCode === 0) {
                     dispatch(setStatusAC(status))
                 }
             })

@@ -3,6 +3,7 @@ import styles from "./ProfileInfo.module.css";
 import {Preloader} from "../../Common/Preloader/Preloader";
 import {ProfileType} from "../../../redux/profileReducer";
 import {ProfileStatus} from "../ProfileStatus";
+import {ProfileStatusWithHooks} from "../ProfileStatusWithHooks";
 
 type PropsType = {
     profile: ProfileType | null
@@ -22,7 +23,8 @@ const ProfileInfo = (props: PropsType) => {
             </div>*/}
             <div className={styles.descriptionBlock}>
                 <img src={props.profile.photos.large ? props.profile.photos.large : "" } alt={'Your photo'} />
-                <ProfileStatus status={props.status || 'No status'} updateStatus={props.updateStatus }/>
+                {/*<ProfileStatus status={props.status || 'No status'} updateStatus={props.updateStatus }/>*/}
+                <ProfileStatusWithHooks status={props.status || 'No status'} updateStatus={props.updateStatus }/>
                 <div>{props.profile.contacts.facebook}</div>
                 <div>{props.profile.contacts.github}</div>
                 <div>{props.profile.lookingForAJobDescription}</div>
