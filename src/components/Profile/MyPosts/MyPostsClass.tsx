@@ -19,36 +19,44 @@ type FormDataType = {
 }
 
 
-const MyPosts = React.memo((props: PropsType) => {
+class MyPostsClass extends React.Component<PropsType> {
 
 
-    let postElements = props.postData.map(post => <Post message={post.message} likesCount={post.likesCount}
-                                                        id={post.id} key={post.id}/>);
-
-
-    const onSubmit =   (value: FormDataType) => {
-        props.addPost(value.post)
+    shouldComponentUpdate(nextProps: Readonly<PropsType>, nextState: Readonly<{}>, nextContext: any): boolean {
+        return nextProps !== this.props || nextState !== this.state
     }
 
+    render() {
 
-    return (
-        <div className={styles.postsBlock}>
-            <h3>My posts</h3>
-            <div>
+        // console.log('Rendering')
+        let postElements = this.props.postData.map(post => <Post message={post.message} likesCount={post.likesCount}
+                                                                 id={post.id} key={post.id}/>);
 
-                <TextAreaFormRedux onSubmit={onSubmit}/>
 
+        const onSubmit = (value: FormDataType) => {
+            this.props.addPost(value.post)
+        }
+
+
+        return (
+            <div className={styles.postsBlock}>
+                <h3>My posts</h3>
+                <div>
+
+                    <TextAreaFormRedux onSubmit={onSubmit}/>
+
+                </div>
+                <div className={styles.posts}>
+                    {postElements}
+                </div>
             </div>
-            <div className={styles.posts}>
-                {postElements}
-            </div>
-        </div>
-    );
-})
+        );
+    }
+}
+
 const maxLength10 = maxLengthCreater(10)
 
 const TextAreaForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-    console.log('Rendering')
     return <form onSubmit={props.handleSubmit}>
         <div>
             <Field  placeholder='Enter your post' component={Textarea} name={'post'}
@@ -62,7 +70,7 @@ const TextAreaForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const TextAreaFormRedux = reduxForm<FormDataType>({form: 'MyPosts'})(TextAreaForm)
 
-export default MyPosts;
+export default MyPostsClass;
 
 //до 76 урока
 /*

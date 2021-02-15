@@ -4,6 +4,7 @@ import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
 import {Dispatch} from "redux";
+import MyPostsClass from "./MyPostsClass";
 
 
 /*type PropsType = {
@@ -43,7 +44,7 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
     return ({
         addPost: (post: string) => {
             dispatch(AddPostAC(post))
-        },
+        }
         /*updateNewPostText: (newText: string) => {
             dispatch(UpdateNewPostTextAC(newText))
         }*/
