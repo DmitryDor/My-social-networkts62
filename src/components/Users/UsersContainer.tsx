@@ -7,7 +7,7 @@ import {
      unfollowTC,
     UserType
 } from "../../redux/usersReducer";
-import Users from "./Users";
+import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
 import { compose } from "redux";
 import {

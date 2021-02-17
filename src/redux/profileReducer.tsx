@@ -13,10 +13,7 @@ export type AddPostActionType = {
     post: string
 }
 
-/*type  UpdateNewPostTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}*/
+
 type SetUserProfileActionType = {
     type: 'SET-USER-PROFILE'
     profile: any
@@ -73,18 +70,9 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
                 postData: [...state.postData, {id: "5", message: action.post, likesCount: 0}],
                 // newPostText: ''
             }
-            /* const newPost = {id: "5", message: stateCopy.newPostText, likesCount: 0}
-             stateCopy.postData = [...stateCopy.postData]
-             stateCopy.postData.push(newPost)
-             stateCopy.newPostText = ''
-             return stateCopy*/
+
         }
-        /*  case "UPDATE-NEW-POST-TEXT": {
-              return {
-                  ...state,
-                  newPostText: action.newText
-              }
-          }*/
+
         case "SET-USER-PROFILE": {
             return {
                 ...state,
