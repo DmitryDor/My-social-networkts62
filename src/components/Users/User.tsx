@@ -3,7 +3,6 @@ import userPhoto from "../../assets/images/kapyushon_14725.jpg";
 import styles from "./Users.module.css";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import {Paginator} from "../Common/Paginator/Paginator";
 
 
 type PropsType = {
@@ -13,9 +12,7 @@ type PropsType = {
     user: UserType
 }
 
-
 export const User = (props: PropsType) => {
-
     return (
         <div>
                     <span>
@@ -31,14 +28,11 @@ export const User = (props: PropsType) => {
                                 ? <button disabled={props.followingInProgress.some(id => id === props.user.id)}
                                           onClick={() => {
                                               props.unfollow(props.user.id)
-
                                           }}>Unfollow</button>
 
                                 : <button disabled={props.followingInProgress.some(id => id === props.user.id)}
                                           onClick={() => {
-
                                               props.follow(props.user.id)
-
                                           }}>Follow</button>
                             }
                         </div>

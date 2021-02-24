@@ -37,7 +37,6 @@ class App extends React.Component<PropsType> {
            return  <Preloader/>
         }  else {
             return (
-                <BrowserRouter>
                     <div className="app-wrapper">
                         <HeaderContainer/>
                         <Navbar/>
@@ -51,7 +50,6 @@ class App extends React.Component<PropsType> {
                             <Route path="/settings" render={() => <Settings/>}/>
                         </div>
                     </div>
-                </BrowserRouter>
             );
         }
     }

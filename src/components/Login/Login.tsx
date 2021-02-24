@@ -40,9 +40,8 @@ export const Login = (props: PropsType) => {
             </div>
         );
     }
-
-
 }
+
 const maxLength10 = maxLengthCreater(10)
 const maxLength25 = maxLengthCreater(25)
 
@@ -51,7 +50,6 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field placeholder='Login' component={Input} name='login' validate={[required, maxLength25]}
-
                 />
             </div>
             <div>

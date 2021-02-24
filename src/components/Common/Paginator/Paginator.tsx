@@ -7,11 +7,11 @@ type PropsType = {
     totalItemsCount: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
-    portionSize?: number
+    portionSize: number
 }
 
 
-export const Paginator = ({portionSize = 20, ...props}: PropsType) => {
+export const Paginator = (props: PropsType) => {
     let pagesCount = Math.ceil(props.totalItemsCount / props.pageSize)
 
     let pages = []
@@ -20,10 +20,10 @@ export const Paginator = ({portionSize = 20, ...props}: PropsType) => {
         pages.push(i)
     }
 
-    let portionCount = Math.ceil(pagesCount / portionSize)
+    let portionCount = Math.ceil(pagesCount / props.portionSize)
     let[portionNumber, setPortionNumber] = useState<number>(1)
-    let leftPortionPageNumber = (portionNumber - 1) * portionSize +1
-    let rightPortionPageNumber = portionNumber * portionSize
+    let leftPortionPageNumber = (portionNumber - 1) * props.portionSize +1
+    let rightPortionPageNumber = portionNumber * props.portionSize
 
 
 
@@ -37,6 +37,7 @@ export const Paginator = ({portionSize = 20, ...props}: PropsType) => {
                 pages
                     .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                     .map(p => {
+
                     return <span className={props.currentPage === p ? `${styles.coursor && styles.selectedPage}`: `'' ${styles.coursor} `}
                                  onClick={() => {
                                      props.onPageChanged(p)

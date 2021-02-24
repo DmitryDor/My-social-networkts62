@@ -1,29 +1,4 @@
-type AddMessageActionType = {
-    type: 'ADD-MESSAGE'
-    newMessageBody: string
-}
-type UpdateMessageText = {
-    type: 'UPDATE-MESSAGE-TEXT'
-    newMessage: string
-}
 
-//
-/*export type DialogsPageType = {
-    dialogsData: Array<DialogsType>
-    messagesData: Array<MessagesType>
-    newMessage: string*/
-// }
-//
-type ActionType = AddMessageActionType | UpdateMessageText
-
-export type DialogsType = {
-    id: string,
-    name: string
-}
-export type MessagesType = {
-    id: string,
-    message: string
-}
 
 export type InitialStateType = {
     dialogsData: Array<DialogsType>
@@ -46,7 +21,7 @@ let initialState: InitialStateType = {
 
 export const dialogsReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
-        case "ADD-MESSAGE": {
+        case "DIALOGS/ADD-MESSAGE": {
             return {
                 ...state,
                 // newMessage: '',
@@ -66,24 +41,32 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
             // stateCopy.newMessage = ''
             // return stateCopy
         }
-        case "UPDATE-MESSAGE-TEXT": {
+     /*   case "UPDATE-MESSAGE-TEXT": {
             return {
                 ...state,
                 // newMessage: action.newMessage
             }
-           /* const stateCopy = {...state}
-            stateCopy.newMessage = action.newMessage
-            return stateCopy*/
-        }
+
+        }*/
         default: {
             return state
         }
     }
 }
-export const addMessageAC = (newMessageBody: string): AddMessageActionType => ({type: 'ADD-MESSAGE', newMessageBody})
 
-/*
-export const updateMessageAC = (newMessage: string): UpdateMessageText => ({
-    type: 'UPDATE-MESSAGE-TEXT',
-    newMessage: newMessage
-})*/
+//AC
+
+export const addMessageAC = (newMessageBody: string) => ({type: 'DIALOGS/ADD-MESSAGE', newMessageBody})
+
+// types
+
+type ActionType = ReturnType<typeof addMessageAC>
+
+export type DialogsType = {
+    id: string,
+    name: string
+}
+export type MessagesType = {
+    id: string,
+    message: string
+}

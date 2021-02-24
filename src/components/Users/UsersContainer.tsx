@@ -2,14 +2,16 @@ import React from "react";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
-     followTC, getUsersThunkCreater,
-    setCurrentPageAC, toggleFollowingProgressAC,
-     unfollowTC,
+    followTC,
+    getUsersThunkCreater,
+    setCurrentPageAC,
+    toggleFollowingProgressAC,
+    unfollowTC,
     UserType
 } from "../../redux/usersReducer";
 import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
-import { compose } from "redux";
+import {compose} from "redux";
 import {
     getcurrentPage,
     getfollowingInProgress,
@@ -20,7 +22,6 @@ import {
 } from "../../redux/usersSelectors";
 
 
-
 type MapStatePropsType = {
     users: Array<UserType>
     pageSize: number
@@ -28,8 +29,6 @@ type MapStatePropsType = {
     currentPage: number
     isFeatching: boolean
     followingInProgress: Array<number>
-    // isAuth: boolean
-
 }
 
 type MapDispatchToPropsType = {
@@ -38,8 +37,6 @@ type MapDispatchToPropsType = {
     getUsers: (currentPage: number, pageSize: number) => void
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-
-
 }
 
 type PropsType = MapStatePropsType & MapDispatchToPropsType
