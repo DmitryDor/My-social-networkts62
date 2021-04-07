@@ -3,9 +3,9 @@ import {AppStateType} from "./redux-store";
 import {profileAPI} from "../api/api";
 
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
-let initialState = {
+export let initialState = {
     postData: [] as Array<PostType>,
     profile: null as null | ProfileType,
     status: '' as string

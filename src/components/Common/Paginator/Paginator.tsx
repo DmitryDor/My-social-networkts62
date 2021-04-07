@@ -20,18 +20,18 @@ export const Paginator = (props: PropsType) => {
         pages.push(i)
     }
 
-    let portionCount = Math.ceil(pagesCount / props.portionSize)
     let[portionNumber, setPortionNumber] = useState<number>(1)
-    let leftPortionPageNumber = (portionNumber - 1) * props.portionSize +1
-    let rightPortionPageNumber = portionNumber * props.portionSize
 
+    let portionCount = Math.ceil(pagesCount / props.portionSize)
+    let leftPortionPageNumber = (portionNumber - 1) * props.portionSize +1  // номер порции(1-я десятка = 1 и тд.)
+    let rightPortionPageNumber = portionNumber * props.portionSize
 
 
     return (
         <div className={styles.paginator}>
             {
                 portionNumber > 1 &&
-                    <button onClick={() => setPortionNumber(portionNumber - 1)}>LEFT</button>
+                    <button onClick={() => setPortionNumber(portionNumber - 1)}>Prev</button>
             }
             {
                 pages
@@ -46,7 +46,7 @@ export const Paginator = (props: PropsType) => {
                 })
             }
             {portionCount > portionNumber &&
-            <button onClick={() => setPortionNumber(portionNumber + 1)}>Right</button>
+            <button onClick={() => setPortionNumber(portionNumber + 1)}>Next</button>
             }
         </div>
     )
