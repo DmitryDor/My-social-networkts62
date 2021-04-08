@@ -1,28 +1,23 @@
 import React from 'react';
-
-import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import { ProfilePageType} from "../../redux/state";
-/*import {PostType} from "./../../index";*/
-
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {ProfileType} from "../../redux/profileReducer";
 
 type PropsType = {
-    profilePage: ProfilePageType
-    addPost: Function,
-    updateNewPostText: Function
+
+    profile: ProfileType | null
+    status: string
+    updateStatus: (status: string) => void
+
 }
 
-  const Profile = (props: PropsType) => {
+const Profile = (props: PropsType) => {
 
 
     return (
-        <div >
-            <ProfileInfo/>
-            <MyPosts postData={props.profilePage.postData}
-                     addPost={props.addPost}
-                     newPostText={props.profilePage.newPostText}
-                     updateNewPostText={props.updateNewPostText}
-            />
+        <div>
+            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
+            <MyPostsContainer />
         </div>
     );
 }
